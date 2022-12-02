@@ -80,11 +80,13 @@ UNLOCK TABLES;
 -- Visitors in building
 DROP TABLE IF EXISTS Vistors;
 CREATE TABLE Visitors (
-    government_id INT(11) NOT NULL,
+    tid varchar(50) NOT NULL,
+    government_id VARCHAR(50) NOT NULL,
     firstname VARCHAR(50) NOT NULL default '',
     lastname VARCHAR(50) NOT NULL default '',
     purpose VARCHAR(50) NOT NULL default 'Accounts',
     floornum INT(2) NOT NULL,
+    dateandtime VARCHAR(50) NOT NULL default '';
     CHECK (purpose = 'Accounts' OR purpose = 'Auditing' OR purpose = 'Human Relations')
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
@@ -103,3 +105,6 @@ CREATE TABLE VisitorsLog (
     CHECK (purpose = 'Accounts' OR purpose = 'Auditing' OR purpose = 'Human Relations'),
     CHECK (log_type = 'IN' OR log_type = 'OUT')
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+
+GRANT ALL PRIVILEGES ON TAJ.* TO 'project_user'@'localhost' IDENTIFIED BY 'password123';

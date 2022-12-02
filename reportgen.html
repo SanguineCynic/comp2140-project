@@ -12,11 +12,12 @@
 
     <header>
       <img src="images/logocropped.png" alt="TAJ Logo">
+
+      <h2>Report Generation</h2>
     </header>
 
-      <main>
+      <form action="reportgen.php" method="post" id="repgenform">
 
-        <div>
           <label>First Name</label>
           <input type="checkbox" name="sel_fname">
           <br>
@@ -35,8 +36,10 @@
             <option>Visitors</option>
             <option>Employees</option>
           </select>
+        <br>
+        <input type="submit" value="Generate" id="genbtn" class="savebtn">
           
-        </div>
+      </form>
         <table>
           
         </table>

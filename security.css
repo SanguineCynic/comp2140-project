@@ -85,6 +85,20 @@ input[type=text]{
   box-shadow: none;
   outline: none;
 }
+input[type=in]{
+  width: 480px;
+  padding: 12px 20px;
+  margin: 8px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  background-color: #ffffff;
+  border: 1px outset whitesmoke;
+  box-shadow: none;
+  outline: none;
+}
 
 .save{
   clear: both;

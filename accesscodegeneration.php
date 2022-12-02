@@ -2,6 +2,7 @@
 if (isset($_POST['generate'])) {
     $floorNumber = $_POST['floornumber'];
     $department = $_POST['department'];
+    $idNumber =$_POST ['idNumber'];
     if ($department == "Accounting") {
         $department = "A";
     } elseif ($department == "Human Resources") {
@@ -11,22 +12,28 @@ if (isset($_POST['generate'])) {
     } else {
         $department = "X";
     }
-    $randomNumber = sprintf('%03d', mt_rand(0, 999));
-    $accessCode = $floorNumber.$department.$randomNumber;
-    echo "Your access code is $accessCode";
+    // comparing hash with plain text
+   
+    $accessCode = $floorNumber.$department.$idNumber;
+    echo "<p>Your access code is 
+".md5($accessCode)."</p>"
+
 }
 ?>
 
 <form action="" method="post">
+     ID Number:
+    <input type="number" name="idNumber" />
+      <br />
     Floor Number:
-    <input type="text" name="floornumber" />
+    <input type="text" name="floorNumber" />
     <br />
     Department:
     <select name="department">
         <option value="Accounting">Accounting</option>
         <option value="Human Resources">Human Resources</option>
         <option value="Auditing">Auditing</option>
-        <option value="Accaud">Accaud</option>
+      
     </select>
     <br />
     <input type="submit" name="generate" value="Generate" />

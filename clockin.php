@@ -1,20 +1,39 @@
+
 <?php
+$servername  = "localhost";
+$username = "root";
+$password = "";
+$dbname = "taj";
 
-function sanitizeData($data){
-	$data=trim($data);
-	$data=stripslashes($data);
-	$data=strip_tags($data);
-	$data=htmlspecialchars($data);
-	return $data;
-}
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	$gid = sanitizeData($_POST['ac']);
-    $firstname = sanitizeData($_POST['firstname']);
-	$lastname = sanitizeData($_POST['lastname']);
-	$department = sanitizeData($_POST['department']);
-  $floorno = sanitizeData($_POST['floor']);
-	
-include "ticketview.php";
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
+//get the form data
+$name = filter_var($_POST['name'],FILTER_SANITIZE_STRING);
+$time = filter_var($_POST['time'],FILTER_SANITIZE_STRING);
+
+//check if the employee works there
+$namecheck_sql = "SELECT name FROM Employees WHERE name = ?";
+$namecheck = $conn->prepare($namecheck_sql);
+$namecheck->bind_param("s",$name);
+$namecheck->execute();
+$namecheck->store_result();
+
+//if employee works there, register the time and date
+if($namecheck->num_rows > 0){
+    $regtime_sql = "INSERT INTO ClockIns (name,time) VALUES (?,?)";
+    $regtime = $conn->prepare($regtime_sql);
+    $regtime->bind_param("ss",$name,$time);
+    $regtime->execute();
+    echo "Time and date registered!";
+} else {
+    echo "Employee is not registered!";
+}
+
+$conn->close();
 ?>

@@ -77,3 +77,13 @@ th{
   border-radius: 15px;
   margin-top: 3%;
 }
+
+h2{
+  text-align: center;
+  color: purple;
+}
+
+#repgenform{
+  width:75%;
+  margin:auto;
+}  

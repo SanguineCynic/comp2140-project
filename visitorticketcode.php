@@ -1,18 +1,19 @@
 <?php
-if (isset($_POST['generate'])) {
-    $floorNumber = $_POST['floornumber'];
-    $department = $_POST['department'];
-    if ($department == "Accounting") {
+
+    if ($purpose == "Accounting") {
         $department = "A";
-    } elseif ($department == "Human Resources") {
+    } elseif ($purpose == "Human Resources") {
         $department = "H";
-    } elseif ($department == "Auditing") {
+    } elseif ($purpose == "Auditing") {
         $department = "U";
     } else {
         $department = "X";
     }
-    $randomNumber = sprintf('%03d', mt_rand(0, 999));
-    $tid = $floorNumber.$department.$randomNumber;
-}
+
+    $order = 1;
+    $order= ++$order;
+    $order = sprintf("%04d",$order);
+    $tid = $department.$order;
+
 ?>
 

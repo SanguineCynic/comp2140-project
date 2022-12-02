@@ -10,30 +10,42 @@ $dbpassword = 'password123';
 $dbname = 'TAJ';
 
 $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $dbusername, $dbpassword);
-$regex_password = "/(?=^.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/";
-echo "hello 1<br>";
 
-echo "{$_POST['login_password']}<br>";
-echo "{$_POST['login_email']}<br>";
-if(isset($_POST["login_email"])) {
+if(isset($_POST["login_username"])) {
 	$password = filter_var($_POST['login_password'], FILTER_SANITIZE_STRING);
-	$email = filter_var($_POST['login_email'], FILTER_SANITIZE_EMAIL);
-	$query = "SELECT * FROM Users WHERE Users.email = '{$email}'";
-	$stmt = $conn->query($query);
-	$results = $stmt->fetchALL(PDO::FETCH_ASSOC);
-	
-	if (sizeof($results) == 1) {
-		if ($results[0]["password"] ==  $password) {
-			$_SESSION['logged-in'] = true;
-			$_SESSION['userid'] = $results[0]['id'];
-			$_SESSION['useremail'] = $email;
-			//print_r($_SESSION);
-			if ($results[0]["role"] == "Admin") {
-				echo "admin log in<br>";
+	$username = filter_var($_POST['login_username'], FILTER_SANITIZE_STRING);
+	$radio = filter_var($_POST['login_type'], FILTER_SANITIZE_STRING);
+	if ($radio == "Man") {
+		$query = "SELECT * FROM managers WHERE managers.username = '{$username}'";
+		$stmt = $conn->query($query);
+		$results = $stmt->fetchALL(PDO::FETCH_ASSOC);
+		
+		if (sizeof($results) == 1) {
+			if ($results[0]["password"] ==  $password) {
+				$_SESSION['logged-in'] = true;
+				$_SESSION['login-type'] = $radio;
+				$_SESSION['userid'] = $results[0]['id'];
+				$_SESSION['useremail'] = $email;
+				echo "manager log in";
+				}
 			}
-			else {
-				echo "user log in<br>";
+		
+		}
+	}
+	elseif {
+		$query = "SELECT * FROM security WHERE security.username = '{$username}'";
+		$stmt = $conn->query($query);
+		$results = $stmt->fetchALL(PDO::FETCH_ASSOC);
+		
+		if (sizeof($results) == 1) {
+			if ($results[0]["password"] ==  $password) {
+				$_SESSION['logged-in'] = true;
+				$_SESSION['login-type'] = $radio;
+				$_SESSION['userid'] = $results[0]['id'];
+				$_SESSION['useremail'] = $email;
+				echo "security log in";
 			}
+		
 		}
 	}
 }
